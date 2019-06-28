@@ -135,51 +135,84 @@ server <- function(input, output, session) {
 
     # Dynamic Plot
     output$plot <- renderPlot({
+        
         plot_grid(
-            plot_vals() %>%
-                ggplot(aes(x = arr, y = 1)) +
-                geom_halfeyeh(fill = "blue", .width = 0.89) + 
-                geom_vline(xintercept = 0, linetype = "dashed", color = "black") + 
-                labs(
-                    x = "Absolute Risk Reduction",
-                    y = "Density",
-                    subtitle = "Absolute Risk Reduction"
-                ) + 
-                theme_classic() +
-                theme(text = element_text(family = "Gill Sans MT"),
-                      axis.text.y = element_blank(),
-                      axis.ticks.y = element_blank()),
+            plot_grid(
+                plot_vals() %>%
+                    ggplot(aes(x = sk_risk, y = 1)) +
+                    geom_halfeyeh(fill = "darkred", .width = 0.89) + 
+                    labs(
+                        x = "Absolute Risk (SK)",
+                        y = "Density",
+                        subtitle = "P(death | tx = SK)"
+                    ) + 
+                    theme_classic() +
+                    theme(text = element_text(family = "Gill Sans MT"),
+                          axis.text.y = element_blank(),
+                          axis.ticks.y = element_blank()),
+                
+                plot_vals() %>%
+                    ggplot(aes(x = tpa_risk, y = 1)) +
+                    geom_halfeyeh(fill = "darkred", .width = 0.89) + 
+                    labs(
+                        x = "Absolute Risk (tPA)",
+                        y = "Density",
+                        subtitle = "P(death | tx = tPA)"
+                    ) + 
+                    theme_classic() +
+                    theme(text = element_text(family = "Gill Sans MT"),
+                          axis.text.y = element_blank(),
+                          axis.ticks.y = element_blank()),
+                ncol = 2, align = "hv", axis = "b"
+            ),
             
-            plot_vals() %>%
-                ggplot(aes(x = rr, y = 1)) +
-                geom_halfeyeh(fill = "darkgreen", .width = 0.89) + 
-                geom_vline(xintercept = 1, linetype = "dashed", color = "black") + 
-                labs(
-                    x = "Risk Ratio",
-                    y = "Density",
-                    subtitle = "Risk Ratio"
-                ) + 
-                theme_classic() +
-                theme(text = element_text(family = "Gill Sans MT"),
-            axis.text.y = element_blank(),
-            axis.ticks.y = element_blank()),
-            
-            plot_vals() %>%
-                ggplot(aes(x = or, y = 1)) +
-                geom_halfeyeh(fill = "purple", .width = 0.89) +
-                geom_vline(xintercept = 1, linetype = "dashed", color = "black") + 
-                labs(
-                    x = "Odds Ratio",
-                    y = "Density",
-                    subtitle = "Odds Ratio"
-                ) + 
-                theme_classic() +
-                theme(text = element_text(family = "Gill Sans MT"),
-                      axis.text.y = element_blank(),
-                      axis.ticks.y = element_blank()),
-            
-            ncol = 3, align = "hv", axis = "b")
-    }, height = 300)
+            plot_grid(
+                plot_vals() %>%
+                    ggplot(aes(x = arr, y = 1)) +
+                    geom_halfeyeh(fill = "blue", .width = 0.89) + 
+                    geom_vline(xintercept = 0, linetype = "dashed", color = "black") + 
+                    labs(
+                        x = "Absolute Risk Reduction",
+                        y = "Density",
+                        subtitle = "Absolute Risk Reduction"
+                    ) + 
+                    theme_classic() +
+                    theme(text = element_text(family = "Gill Sans MT"),
+                          axis.text.y = element_blank(),
+                          axis.ticks.y = element_blank()),
+                
+                plot_vals() %>%
+                    ggplot(aes(x = rr, y = 1)) +
+                    geom_halfeyeh(fill = "darkgreen", .width = 0.89) + 
+                    geom_vline(xintercept = 1, linetype = "dashed", color = "black") + 
+                    labs(
+                        x = "Risk Ratio",
+                        y = "Density",
+                        subtitle = "Risk Ratio"
+                    ) + 
+                    theme_classic() +
+                    theme(text = element_text(family = "Gill Sans MT"),
+                axis.text.y = element_blank(),
+                axis.ticks.y = element_blank()),
+                
+                plot_vals() %>%
+                    ggplot(aes(x = or, y = 1)) +
+                    geom_halfeyeh(fill = "purple", .width = 0.89) +
+                    geom_vline(xintercept = 1, linetype = "dashed", color = "black") + 
+                    labs(
+                        x = "Odds Ratio",
+                        y = "Density",
+                        subtitle = "Odds Ratio"
+                    ) + 
+                    theme_classic() +
+                    theme(text = element_text(family = "Gill Sans MT"),
+                          axis.text.y = element_blank(),
+                          axis.ticks.y = element_blank()),
+                
+                ncol = 3, align = "hv", axis = "b"),
+            ncol = 1, align = "hv"
+        )
+    })
     
     # Link for paper
     url_post<- a("in this project summary.", 
