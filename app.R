@@ -142,9 +142,9 @@ server <- function(input, output, session) {
                     ggplot(aes(x = sk_risk, y = 1)) +
                     geom_halfeyeh(fill = "darkred", .width = 0.89) + 
                     labs(
-                        x = "Absolute Risk (SK)",
+                        x = "P(death | tx = SK)",
                         y = "Density",
-                        subtitle = "P(death | tx = SK)"
+                        subtitle = "Absolute Risk (SK)"
                     ) + 
                     theme_classic() +
                     theme(text = element_text(family = "Gill Sans MT"),
@@ -155,9 +155,9 @@ server <- function(input, output, session) {
                     ggplot(aes(x = tpa_risk, y = 1)) +
                     geom_halfeyeh(fill = "darkred", .width = 0.89) + 
                     labs(
-                        x = "Absolute Risk (tPA)",
+                        x = "P(death | tx = tPA)",
                         y = "Density",
-                        subtitle = "P(death | tx = tPA)"
+                        subtitle = "Absolute Risk (tPA)"
                     ) + 
                     theme_classic() +
                     theme(text = element_text(family = "Gill Sans MT"),
